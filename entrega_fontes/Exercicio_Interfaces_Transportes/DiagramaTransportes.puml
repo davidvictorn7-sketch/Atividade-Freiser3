@@ -1,0 +1,60 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam shadowing false
+
+interface MeioTransporte <<interface>> {
+  + TARIFA_MINIMA : double
+  + getNome() : String
+  + calcularCusto(distanciaKm : double) : double
+  + resumo(distanciaKm : double) : String
+  {static} + distanciaValida(distanciaKm : double) : boolean
+}
+
+interface Rastreavel <<interface>> {
+  + obterLocalizacao() : String
+}
+
+class CarroParticular {
+  - placa : String
+  + CarroParticular(placa : String)
+  + getNome() : String
+  + calcularCusto(distanciaKm : double) : double
+  + obterLocalizacao() : String
+}
+class Motocicleta {
+  - modelo : String
+  + Motocicleta(modelo : String)
+  + getNome() : String
+  + calcularCusto(distanciaKm : double) : double
+}
+class OnibusUrbano {
+  - linha : String
+  + OnibusUrbano(linha : String)
+  + getNome() : String
+  + calcularCusto(distanciaKm : double) : double
+  + obterLocalizacao() : String
+}
+class BicicletaCompartilhada {
+  - codigo : String
+  + BicicletaCompartilhada(codigo : String)
+  + getNome() : String
+  + calcularCusto(distanciaKm : double) : double
+}
+class CentralDeTransportes {
+  + processar(transporte : MeioTransporte, distanciaKm : double) : void
+  + processarTodos(transportes : MeioTransporte[], distanciaKm : double) : void
+}
+class Main {
+  + main(args : String[]) : void
+}
+
+MeioTransporte <|.. CarroParticular
+MeioTransporte <|.. Motocicleta
+MeioTransporte <|.. OnibusUrbano
+MeioTransporte <|.. BicicletaCompartilhada
+Rastreavel <|.. CarroParticular
+Rastreavel <|.. OnibusUrbano
+CentralDeTransportes ..> MeioTransporte : usa
+Main ..> CentralDeTransportes : cria
+@enduml
